@@ -1,0 +1,20 @@
+{{ 
+    config(
+        materialized='view'
+        )
+ }}
+
+ with ranked_customers as(
+ select *, 
+        row_number() over(partition by customer_id order by updated_at desc) as row_number
+ from
+ {{source('raw_banking','raw_customers')}} 
+ )
+
+ select 
+    customer_id,
+    UPPER(TRIM(customer_name)) as customer_name,
+    UPPER(TRIM(city)) as city,
+    UPPER(TRIM(status)) as status
+from ranked_customers
+where row_number = 1

@@ -1,0 +1,33 @@
+banking_dbt:
+  outputs:
+    dev:
+      catalog: banking_dbt
+      host: dbc-217b5d90-6f85.cloud.databricks.com
+      http_path: /sql/1.0/warehouses/0aa644c795cc95a0
+      schema: default
+      threads: 1
+      token: 
+      type: databricks
+  target: dev
+dbt_first_tutorial_core:
+  outputs:
+    dev:
+      catalog: dbt
+      host: dbc-217b5d90-6f85.cloud.databricks.com
+      http_path: /sql/1.0/warehouses/0aa644c795cc95a0
+      schema: default
+      threads: 1
+      token: 
+      type: databricks
+  target: dev
+dbt_folder:
+  outputs:
+    dev:
+      catalog: dbt
+      host: dbc-217b5d90-6f85.cloud.databricks.com
+      http_path: /sql/1.0/warehouses/0aa644c795cc95a0
+      schema: source
+      threads: 1
+      token: 
+      type: databricks
+  target: dev

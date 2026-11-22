@@ -1,0 +1,26 @@
+version: 2
+
+models:
+    - name : fct_transactions
+      description: "Banking transaction fact table with one table with one row"
+      columns:
+        - name : transaction_id
+          description: "unique identifier for each transaction"
+          data_tests:
+            - not_null
+            - unique
+        - name : account_id
+          data_tests:
+            - not_null
+            - relationships :
+                arguments:
+                    to : ref('stg_accounts') 
+                    field : account_id
+        - name : customer_id
+          data_tests:
+            - not_null
+        - name : transaction_status
+          data_tests:
+           - accepted_values:
+                arguments:
+                    values: ['SUCCESS', 'FAILED']

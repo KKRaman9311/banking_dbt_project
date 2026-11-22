@@ -1,0 +1,75 @@
+version: 2
+
+
+models:
+    - name: stg_customers
+      description: "cleaned and standardized customer data."
+      columns:
+        - name: customer_id
+          description: "Unique identifier for each customer."
+          data_tests:
+            - not_null
+            - unique
+        - name: customer_name
+          description: "standardized customer name."
+          data_tests:
+            - not_null
+        - name:  status
+          description: "Current Customer status."
+          data_tests:
+            - accepted_values:
+                arguments:
+                    values: ['ACTIVE','INACTIVE']
+    - name: stg_accounts
+      description: "cleaned and standardized account data."
+      columns:
+        - name: account_id
+          description: "Unique identifier for each account."
+          data_tests:
+            - not_null
+            - unique
+        - name: customer_id
+          description: "customer who owns the account."
+          data_tests:
+            - not_null
+            - relationships:
+                to: ref('stg_customers')
+                field: customer_id
+        - name: account_type
+          data_tests:
+            - accepted_values:
+                arguments:
+                    values: ['SAVINGS', 'CURRENT']
+        
+        - name: account_status
+          data_tests:
+            - accepted_values:
+                arguments:
+                    values: ['OPEN', 'CLOSED']
+    - name: stg_transactions
+      description: "cleaned and standardized transactions data."
+      columns:
+        - name: transaction_id
+          description: "unique identifier for each transcation data"
+          data_tests:
+            - not_null
+            - unique
+        - name: account_id
+          description: "Account associated with transaction"
+          data_tests:
+            - not_null
+            - relationships:
+                to: ref('stg_accounts')
+                field: account_id
+        - name: transaction_type
+          data_tests:
+            - accepted_values:
+                 arguments:
+                    values: ['DEPOSIT', 'WITHDRAWAL', 'TRANSFER']
+        - name: transaction_status
+          data_tests:
+            - accepted_values:
+                 arguments:
+                   values: ['SUCCESS', 'FAILED']
+
+      
